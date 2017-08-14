@@ -1,0 +1,138 @@
+<html>
+
+<head>
+
+  <title>Mobile Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <style>
+      body {
+          font-family: 'Roboto', sans-serif;
+          font-weight: 300;
+      }
+
+      header {
+          padding: 20px 0;
+
+      }
+
+
+      footer .row {
+          display: flex;
+          align-items: center;
+      }
+
+      header .row {
+          display: flex;
+          align-items: center;
+
+      }
+      header h1 {
+          font-weight: 700;
+          margin: 0;
+      }
+
+      header nav {
+          display: flex;
+          justify-content: flex-end;
+
+      }
+
+      header p {
+          padding: 0 20px;
+          margin: 0;
+      }
+
+
+      .form {
+          text-align:center;
+          margin: 0 auto 10px;
+          padding: 20px 0 10px 0;
+          font-size: 16px;
+          width: 300px;
+      }
+
+      input[type=text],
+      input[type=email],
+      input[type=password] {
+          color: #666666;
+          width: 100%;
+          border: 1px solid #E6E6E6;
+          border-radius: 0px;
+          height: 60px;
+          margin: 6px auto;
+          text-indent: 10px;
+      }
+
+      .btn-submit {
+          color: #FFFFFF;
+          font-size: 18px;
+          text-transform: uppercase;
+          background:#0084d7;
+          padding: 10px 20px;
+          border: 0;
+          margin-top: 6px;
+      }
+
+  </style>
+</head>
+
+<body>
+<header class="containter">
+  <div class="row">
+    <h1 class="col-xs-4">Mobile Shop</h1>
+    <nav class="col-xs-8 text-right">
+      <% if !current_user %>
+          <p><%= link_to "Početna", '/' %></p>
+          <p><%= link_to "LogIn", '/login' %></p>
+          <p><%= link_to "SignUp", '/signup' %></p>
+
+
+      <% else %>
+          <p><%= current_user.email %></p>
+          <p><%= link_to "Početna", '/' %></p>
+          <p><%= link_to "Logout", logout_path, method: "delete" %> </p>
+
+      <% end %>
+      <% if current_user && current_user.admin? %>
+          <p><%= link_to "Poruke", 'orders/index' %></p>
+          <p><%= link_to "Dodaj", 'mobiles/new' %></p>
+      <% end %>
+      <% if current_user && current_user.user? %>
+          <p><%= link_to "Kontakt", 'orders/new' %></p>
+      <% end %>
+    </nav>
+  </div>
+</header>
+
+
+<div class="login">
+  <div class="container">
+    <div class="form">
+
+      <h1>Sign up</h1>
+
+      <%= form_for(@user) do |f| %>
+          <%= f.text_field :first_name, :placeholder => "First name" %>
+          <%= f.text_field :last_name, :placeholder => "Last name" %>
+          <%= f.email_field :email, :placeholder => "Email" %>
+          <%= f.hidden_field :role, :value => 'user' %>
+          <%= f.password_field :password, :placeholder => "Password" %>
+          <%= f.submit "Create an account", class: "btn-submit" %>
+
+
+          <% end %>
+          </div>
+
+          </div>
+          </div>
+
+          </body>
+
+
+          </html>

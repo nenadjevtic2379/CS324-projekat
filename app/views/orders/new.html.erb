@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Mobile Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <style>
+      body {
+          font-family: 'Roboto', sans-serif;
+          font-weight: 300;
+      }
+
+      header {
+          padding: 20px 0;
+
+      }
+
+
+      footer .row {
+          display: flex;
+          align-items: center;
+      }
+
+      header .row {
+          display: flex;
+          align-items: center;
+
+      }
+      header h1 {
+          font-weight: 700;
+          margin: 0;
+      }
+
+      header nav {
+          display: flex;
+          justify-content: flex-end;
+
+      }
+
+      header p {
+          padding: 0 20px;
+          margin: 0;
+      }
+
+
+      .create {
+          margin: 40px 0;
+      }
+
+      .messages a,
+      .create .actions input {
+          background-color: #0084d7;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          font-size: 14px;
+          margin-top: 10px;
+          padding: 12px 24px;
+          transition: background-color 0.5s;
+          text-decoration: none;
+          display: inline-block;
+      }
+
+
+
+      p.time {
+          color: #0084d7;
+          font-size: 12px;
+          margin-top: 12px;
+      }
+
+      button {
+          background-color: #f2580b;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          font-size: 14px;
+          margin-top: 10px;
+          padding: 12px 24px;
+          transition: background-color 0.5s;
+      }
+
+      button:hover {
+          background-color: #c24609;
+          transition: background-color 0.5s;
+      }
+
+      form label {
+          display: block;
+          width: 100%;
+      }
+
+      form textarea {
+          border: 1px solid gray;
+          font-family: 'Roboto', sans-serif;
+          font-size: 14px;
+          font-weight: 300;
+          margin: 20px 0 10px;
+          min-height: 100px;
+          padding: 16px;
+          transition: border 0.5s;
+          width: 100%;
+
+      }
+
+
+
+      form textarea:focus {
+          border: 1px solid #0084d7;
+          box-shadow: 0;
+          outline: 0;
+          transition: border 0.5s;
+      }
+
+
+
+
+  </style>
+</head>
+
+<body>
+<header class="containter">
+  <div class="row">
+    <h1 class="col-xs-4">Mobile Shop</h1>
+    <nav class="col-xs-8 text-right">
+      <% if !current_user %>
+          <p><%= link_to "Početna", '/' %></p>
+          <p><%= link_to "LogIn", '/login' %></p>
+          <p><%= link_to "SignUp", '/signup' %></p>
+
+
+      <% else %>
+          <p><%= current_user.email %></p>
+          <p><%= link_to "Početna", '/' %></p>
+          <p><%= link_to "Logout", logout_path, method: "delete" %> </p>
+
+      <% end %>
+      <% if current_user && current_user.admin? %>
+          <p><%= link_to "Poruke", 'orders/index' %></p>
+          <p><%= link_to "Dodaj", 'mobiles/new' %></p>
+      <% end %>
+      <% if current_user && current_user.user? %>
+          <p><%= link_to "Kontakt", 'orders/new' %></p>
+      <% end %>
+    </nav>
+  </div>
+</header>
+
+
+<div class="create">
+  <div class="container">
+
+
+    <%= form_for(@order) do |f| %>
+        <div class="field">
+
+          <p>Email </p>
+          <%= f.text_field :user, :value => current_user.email  %><br/>   <br/>
+
+          <p>Pitanje</p>
+          <%= f.text_area :pitanje %>
+
+        </div>
+        <div class="actions">
+          <%= f.submit "Pošalji" %>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html>
+
+            <head>
+
+              <title>Mobile Shop</title>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+              <style>
+                  body {
+                      font-family: 'Roboto', sans-serif;
+                      font-weight: 300;
+                  }
+
+                  header {
+                      padding: 20px 0;
+
+                  }
+
+                  header .row,
+                  footer .row {
+                      display: flex;
+                      align-items: center;
+                  }
+
+                  header h1 {
+                      font-weight: 700;
+                      margin: 0;
+
+                  }
+
+                  header nav {
+                      display: flex;
+                      justify-content: flex-end;
+                      position: fixed;
+                  }
+
+                  header p {
+                      padding: 0 20px;
+                      margin: 0;
+                  }
+                  .jumbotron {
+                      display: flex;
+                      align-items: center;
+                      background-image: url('https://cdn.theconversation.com/files/85948/width1356x668/image-20150622-17765-1y007h7.jpg');
+                      background-size: cover;
+                      color: #ffffff;
+                      height: 500px;
+                      text-shadow: 0.25px 0.25px 0.25px #000000;
+                  }
+
+                  .jumbotron h2 {
+                      font-size: 90px;
+                      font-weight: 700;
+                      margin: 0;
+                      color: white;
+                      background-color:rgba(167,207,219,0.7);
+
+
+                  }
+
+                  .card {
+                      color: black;
+                      display: block;
+                      margin: 4px 0;
+
+                  }
+
+                  .tags .card h2 {
+                      color: black;
+                      position: absolute;
+                      left: 0;
+                      right: 0;
+                      text-align: center;
+                      top: 25%;
+                  }
+
+
+                  .tags img,
+                  .tag img {
+                      display:block;
+                      width:100% \9;
+                      max-width:90px;
+                      height: 90px;
+                  }
+
+                  .tag h2, .tag .card h2, .destination h2, .destination p {
+                      padding: 0 20px 0;
+                  }
+
+                  .tag .card p {
+                      color: #0f0f0f;
+                      font-size: 14px;
+                      font-weight: 300;
+                      -webkit-box-orient: vertical;
+                      padding: 0 20px 20px;
+                  }
+                  .natpis h1 {
+                      text-align: center;
+                      font-family: 'Roboto' sans-serif;
+                      padding: 20px 0;
+                      border-bottom: 1px solid black;
+                  }
+
+              </style>
+            </head>
+
+            <body>
+            <header class="containter">
+
+              <div class="row">
+                <h1 class="col-xs-4">Mobile Shop</h1>
+                <nav class="col-xs-8 text-right">
+                  <% if !current_user %>
+                      <p><%= link_to "Početna", '/' %></p>
+                      <p><%= link_to "LogIn", '/login' %></p>
+                      <p><%= link_to "SignUp", '/signup' %></p>
+
+
+                  <% else %>
+                      <p><%= current_user.email %></p>
+                      <p><%= link_to "Početna", '/' %></p>
+                      <p><%= link_to "Logout", logout_path, method: "delete" %> </p>
+
+                  <% end %>
+                  <% if current_user && current_user.admin? %>
+                      <p><%= link_to "Poruke", '/orders/index' %></p>
+                      <p><%= link_to "Dodaj", '/mobiles/new' %></p>
+                  <% end %>
+                  <% if current_user && current_user.user? %>
+                      <p><%= link_to "Kontakt", 'orders/new' %></p>
+                  <% end %>
+                </nav>
+              </div>
+            </header>
+            <section class="jumbotron">
+              <div class="container">
+                <div class="row text-center">
+                  <h2>Dobrodošli u MobileShop</h2>
+                </div>
+              </div>
+
+            </section>
+
+            <div class="tag">
+              <div class="container">
+                <div class="natpis">
+                  <h1 class="col-xs-12">Trenutno u ponudi</h1>
+                </div>
+                <div class="cards row">
+                  <% @mobiles.each do |t| %>
+                      <div class="card col-xs-2">
+                        <h1><%= t.ime %></h1>
+                        <%= image_tag t.slika %>
+                        <h3><%= t.opis %></h3>
+
+                        <%= link_to "Više", mobile_path_path(t) %>
+
+                      </div>
+                  <% end %>
+                </div>
+
+              </div>
+            </div>
+
+
+            </body>
+
+
+            </html>
